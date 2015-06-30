@@ -22,6 +22,26 @@ class ExplorerPath {
     return $this->parent->get_absolute_path() . "/" . $filename;
   }
 
+  function content() {
+    $ret = array();
+    $abs_path = $this->get_absolute_path();
+
+    if(is_dir($abs_path)) {
+      $f = opendir($abs_path);
+
+      while($r = readdir($f)) {
+	$ret[] = array(
+	  'name' => $r,
+	  'size' => filesize("{$abs_path}/{$r}"),
+	);
+      }
+
+      closedir($f);
+    }
+
+    return $ret;
+  }
+
   function get($path) {
     if(preg_match("/^([^\/]*)\/(.*)$/", $path, $m)) {
       if($m[2] == "") {

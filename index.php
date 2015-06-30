@@ -8,14 +8,17 @@ include "inc/basic_actions.php";
 
 $explorer = new Explorer($base_path);
 
-$body = print_r($explorer->get(), 1);
+$ex_path = $explorer->get(array_key_exists('path', $_REQUEST ? $_REQUEST['path'] : null));
+$body = json_encode($ex_path->content());
 ?>
 <!DOCTYPE HTML>
 <html>
   <head>
   </head>
   <body>
+  <pre>
 <? print $body; ?>
+  </pre>
   </body>
 </html>
 
