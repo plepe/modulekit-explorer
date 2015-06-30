@@ -92,7 +92,7 @@ Example:
 ```json
 [
   {
-    'filename': 'foo.png',
+    'name': 'foo.png',
     'type': ['image', 'default'],
     'size': 70000,
     'icon': 'image.png',
@@ -100,7 +100,7 @@ Example:
     'actions': [ 'view', 'download' ]
   },
   {
-    'filename': 'dir',
+    'name': 'dir',
     'type': ['directory'],
     'size': null,
     'icon': 'directory.png',

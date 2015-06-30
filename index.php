@@ -5,8 +5,8 @@
 <?php
 $explorer = new Explorer($base_path);
 
-$ex_path = $explorer->get(array_key_exists('path', $_REQUEST ? $_REQUEST['path'] : null));
-$body = json_encode($ex_path->content());
+$ex_path = $explorer->get(array_key_exists('path', $_REQUEST) ? $_REQUEST['path'] : null);
+$body = $ex_path->render();
 
 Header("Content-Type: text/html; charset=utf-8");
 ?>
