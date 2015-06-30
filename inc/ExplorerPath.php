@@ -19,7 +19,7 @@ class ExplorerPath {
     if($this->parent === null)
       return $this->base_path;
 
-    return $this->parent->get_absolute_path() . "/" . $filename;
+    return $this->parent->get_absolute_path() . "/" . $this->filename;
   }
 
   function content() {
