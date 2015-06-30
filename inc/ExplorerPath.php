@@ -42,6 +42,15 @@ class ExplorerPath {
     return $ret;
   }
 
+  function render($view='view') {
+    $type = $this->explorer->get_file_type('directory'); //$this->type[0]);
+
+    if(array_key_exists($view, $type))
+      return $type[$view]($this);
+
+    return null;
+  }
+
   function get($path) {
     if(preg_match("/^([^\/]*)\/(.*)$/", $path, $m)) {
       if($m[2] == "") {
