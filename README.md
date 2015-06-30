@@ -1,6 +1,6 @@
 Class Explorer
 ==============
-Constructor: `new explorer($base_path, $options)`
+Constructor: `new Explorer($base_path, $options)`
 -------------------------------------------------
 Creates a new explorer instance.
 
@@ -49,7 +49,14 @@ Class `ExplorerPath`
 * type: list of matching types
 * mime_type: mime type
 * parent: link to parent ExplorerPath (null for base directory)
-* abs_path: absolute path of the file, might be an extracted file from an archive in a temporary directory
+
+Function `get_absolute_path()`
+------------------------------
+absolute path of the file, might be an extracted file from an archive in a temporary directory.
+
+Function `get($path)`
+---------------------
+Return an instance of ExplorerPath specified by path below the current object.
 
 Function `info()`
 -----------------
