@@ -6,6 +6,8 @@ class Explorer {
 
     $this->file_types = array();
     $this->actions = array();
+
+    explorer_register_basic_file_types($this);
   }
 
   function get($path=null) {
@@ -20,6 +22,14 @@ class Explorer {
 
   function register_file_type($id, $options) {
     $this->file_types[$id] = $options;
+  }
+
+  function get_file_type($id) {
+    return $this->file_types[$id];
+  }
+
+  function registered_file_types() {
+    return $this->file_types;
   }
 
   function register_action($id, $options) {
