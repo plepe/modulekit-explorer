@@ -33,6 +33,9 @@ class ExplorerPath {
       $f = opendir($abs_path);
 
       while($r = readdir($f)) {
+	if(($r == ".") || ($r == ".."))
+	  continue;
+
 	if(!array_key_exists($r, $this->children_cache))
 	  $this->children_cache[$r] = new ExplorerPath($r, $this);
       }
@@ -84,6 +87,9 @@ class ExplorerPath {
     }
     else
       $filename = $path;
+
+    if(($filename == ".") || ($filename == ".."))
+      return null;
 
     if(!array_key_exists($filename, $this->children_cache)) {
       if(!file_exists($this->get_absolute_path()))
