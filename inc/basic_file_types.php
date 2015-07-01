@@ -22,4 +22,12 @@ function explorer_register_basic_file_types($explorer) {
       );
     },
   ));
+
+  $explorer->register_file_type('default', array(
+    'not_mime_types' => array("directory"),
+    'view' => function($file) {
+      return "Cannot display file";
+    },
+    'weight' => 10,
+  ));
 }
