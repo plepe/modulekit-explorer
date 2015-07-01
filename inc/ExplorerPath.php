@@ -140,8 +140,24 @@ class ExplorerPath {
     return null;
   }
 
+  function show_actions() {
+    $ret  = "<ul class='actions'>\n";
+    foreach($this->actions() as $action_id=>$action) {
+      if(array_key_exists('link', $action))
+	$link = $action['link']($this);
+      else
+	$link = "?path=" . htmlspecialchars(implode("/", $this->path)) . "&amp;action=" . htmlspecialchars($action_id);
+
+      print "<li><a href='{$link}'>{$action['title']}</a></li>";
+    }
+    $ret .= "</ul>\n";
+
+    return $ret;
+  }
+
   function show($view='view') {
     $ret  = "<div class='show {$view}'>\n";
+    $ret .= $this->show_actions();
     $ret .= $this->render($view);
     $ret .= "</div>\n";
 
