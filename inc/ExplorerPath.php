@@ -5,12 +5,14 @@ class ExplorerPath {
       $this->filename = "/";
       $this->parent = null;
       $this->base_path = $parent->base_path;
+      $this->path = array();
       $this->explorer = $parent;
     }
     else {
       $this->filename = $filename;
       $this->parent = $parent;
       $this->base_path = $parent->base_path . "/" . $filename;
+      $this->path = array_merge($parent->path, array($filename));
       $this->explorer = $parent->explorer;
     }
   }
