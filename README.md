@@ -46,6 +46,7 @@ Function `register_action($id, $options)`
 Registers actions for files, e.g. download, create zip archive, execute, ...
 * id: id of the action, e.g. 'download'
 * options:
+  * title: title of the action
   * weight: order of actions to be presented (higher last)
   * mime_types: list of mime types
   * match: a function which decides whether the action is available on the specified file.

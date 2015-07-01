@@ -18,6 +18,7 @@ class ExplorerPath {
 
     $this->children_cache = array();
     $this->types_cache = null;
+    $this->actions_cache = null;
   }
 
   function mime_type() {
@@ -48,6 +49,32 @@ class ExplorerPath {
     weight_sort($this->types_cache);
 
     return $this->types_cache;
+  }
+
+  function actions() {
+    if($this->actions_cache !== null)
+      return $this->actions_cache;
+
+    $this->actions_cache = array();
+    foreach($this->explorer->registered_actions() as $action_id=>$action) {
+      if(array_key_exists('mime_types', $action))
+	if(!in_array($this->mime_type(), $action['mime_types']))
+	  continue;
+
+      if(array_key_exists('not_mime_types', $action))
+	if(in_array($this->mime_type(), $action['not_mime_types']))
+	  continue;
+
+      if(array_key_exists('match', $action))
+	if(!$action['match']($this))
+	  continue;
+
+      $this->actions_cache[$action_id] = $action;
+    }
+
+    weight_sort($this->actions_cache);
+
+    return $this->actions_cache;
   }
 
   function get_absolute_path() {

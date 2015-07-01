@@ -8,6 +8,7 @@ class Explorer {
     $this->actions = array();
 
     explorer_register_basic_file_types($this);
+    explorer_register_basic_actions($this);
 
     $this->finfo = finfo_open(FILEINFO_MIME_TYPE);
   }
@@ -36,5 +37,13 @@ class Explorer {
 
   function register_action($id, $options) {
     $this->actions[$id] = $options;
+  }
+
+  function get_action($id) {
+    return $this->actions[$id];
+  }
+
+  function registered_actions() {
+    return $this->actions;
   }
 }
