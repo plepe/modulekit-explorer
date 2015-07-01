@@ -113,6 +113,10 @@ class ExplorerPath {
     return null;
   }
 
+  function show($view='view') {
+    return $this->render($view);
+  }
+
   function get($path) {
     if(preg_match("/^([^\/]*)\/(.*)$/", $path, $m)) {
       if($m[2] == "") {

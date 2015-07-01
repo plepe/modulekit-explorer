@@ -148,6 +148,17 @@ Function `render($action_id)`
 -----------------------------
 Return HTML rendered output.
 
+Parameter:
+* action_id: which action shall be rendered (default: 'view')
+
+Function `show($action_id)`
+-----------------------------
+Like render, but include header and actions.
+
+Parameter:
+* action_id: which action shall be rendered (default: 'view')
+
+
 Function `raw()`
 ----------------
 Return file contents.
