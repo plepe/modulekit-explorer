@@ -105,10 +105,10 @@ class ExplorerPath {
   }
 
   function render($view='view') {
-    $type = $this->explorer->get_file_type('directory'); //$this->type[0]);
-
-    if(array_key_exists($view, $type))
-      return $type[$view]($this);
+    foreach($this->types() as $type) {
+      if(array_key_exists($view, $type))
+	return $type[$view]($this);
+    }
 
     return null;
   }
