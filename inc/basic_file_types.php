@@ -23,6 +23,13 @@ function explorer_register_basic_file_types($explorer) {
     },
   ));
 
+  $explorer->register_file_type('image', array(
+    'mime_types' => array("image/png", "image/jpeg", "image/gif"),
+    'view' => function($file) {
+      return "<img src='raw.php?path=" . htmlspecialchars(implode("/", $file->path)) . "' />";
+    },
+  ));
+
   $explorer->register_file_type('default', array(
     'not_mime_types' => array("directory"),
     'view' => function($file) {
