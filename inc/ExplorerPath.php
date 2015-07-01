@@ -15,6 +15,8 @@ class ExplorerPath {
       $this->path = array_merge($parent->path, array($filename));
       $this->explorer = $parent->explorer;
     }
+
+    $this->children_cache = array();
   }
 
   function get_absolute_path() {
@@ -25,20 +27,20 @@ class ExplorerPath {
   }
 
   function children() {
-    $ret = array();
     $abs_path = $this->get_absolute_path();
 
     if(is_dir($abs_path)) {
       $f = opendir($abs_path);
 
       while($r = readdir($f)) {
-	$ret[] = new ExplorerPath($r, $this);
+	if(!array_key_exists($r, $this->children_cache))
+	  $this->children_cache[$r] = new ExplorerPath($r, $this);
       }
 
       closedir($f);
     }
 
-    return $ret;
+    return array_values($this->children_cache);
   }
 
   function content() {
@@ -83,14 +85,16 @@ class ExplorerPath {
     else
       $filename = $path;
 
-    if(!file_exists($this->get_absolute_path()))
-      return null;
+    if(!array_key_exists($filename, $this->children_cache)) {
+      if(!file_exists($this->get_absolute_path()))
+	return null;
 
-    $sub = new ExplorerPath($filename, $this);
+      $this->children_cache[$filename] = new ExplorerPath($filename, $this);
+    }
 
     if(!isset($sub_path))
-      return $sub;
+      return $this->children_cache[$filename];
     else
-      return $sub->get($m[2]);
+      return $this->children_cache[$filename]->get($m[2]);
   }
 }
