@@ -114,7 +114,11 @@ class ExplorerPath {
   }
 
   function show($view='view') {
-    return $this->render($view);
+    $ret  = "<div class='show {$view}'>\n";
+    $ret .= $this->render($view);
+    $ret .= "</div>\n";
+
+    return $ret;
   }
 
   function get($path) {

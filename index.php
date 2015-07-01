@@ -23,9 +23,7 @@ Header("Content-Type: text/html; charset=utf-8");
     <?php print_add_html_headers(); /* print additional html headers */ ?>
   </head>
   <body>
-  <pre>
 <? print $body; ?>
-  </pre>
   </body>
 </html>
 
