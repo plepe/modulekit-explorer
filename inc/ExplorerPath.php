@@ -45,6 +45,8 @@ class ExplorerPath {
       $this->types_cache[$type_id] = $type;
     }
 
+    weight_sort($this->types_cache);
+
     return $this->types_cache;
   }
 
