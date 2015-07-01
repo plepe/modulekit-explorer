@@ -2,7 +2,7 @@
 class ExplorerPath {
   function __construct($filename, $parent) {
     if($filename == null) {
-      $this->filename = "/";
+      $this->filename = "root";
       $this->parent = null;
       $this->base_path = $parent->base_path;
       $this->path = array();
@@ -155,10 +155,30 @@ class ExplorerPath {
     return $ret;
   }
 
+  function show_path() {
+    $ret  = "<div class='path'>\n";
+    $parts = array();
+    $p = $this;
+    while($p) {
+      $parts = array_merge(array(
+        "<a href='?path=" . htmlspecialchars(implode("/", $p->path)) . "'>" . htmlspecialchars($p->filename) . "</a>"
+      ), $parts);
+
+      $p = $p->parent;
+    }
+    $ret .= implode(" / ", $parts);
+    $ret .= "</div>\n";
+
+    return $ret;
+  }
+
   function show($view='view') {
     $ret  = "<div class='show {$view}'>\n";
     $ret .= $this->show_actions();
+    $ret .= $this->show_path();
+    $ret .= "<div class='content'>\n";
     $ret .= $this->render($view);
+    $ret .= "</div>\n";
     $ret .= "</div>\n";
 
     return $ret;
