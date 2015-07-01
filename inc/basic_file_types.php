@@ -1,6 +1,7 @@
 <?php
 function explorer_register_basic_file_types($explorer) {
   $explorer->register_file_type('directory', array(
+    'mime_types' => array("directory"),
     'view' => function($file) {
       $content = $file->content();
       $table = new table(array(
@@ -14,6 +15,11 @@ function explorer_register_basic_file_types($explorer) {
       ), $content);
 
       return $table->show();
+    },
+    'info' => function($file) {
+      return array(
+        'size' => 'directory',
+      );
     },
   ));
 }
