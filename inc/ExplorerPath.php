@@ -17,10 +17,35 @@ class ExplorerPath {
     }
 
     $this->children_cache = array();
+    $this->types_cache = null;
   }
 
   function mime_type() {
     return finfo_file($this->explorer->finfo, $this->get_absolute_path());
+  }
+
+  function types() {
+    if($this->types_cache !== null)
+      return $this->types_cache;
+
+    $this->types_cache = array();
+    foreach($this->explorer->registered_file_types() as $type_id=>$type) {
+      if(array_key_exists('mime_types', $type))
+	if(!in_array($this->mime_type(), $type['mime_types']))
+	  continue;
+
+      if(array_key_exists('not_mime_types', $type))
+	if(in_array($this->mime_type(), $type['not_mime_types']))
+	  continue;
+
+      if(array_key_exists('match', $type))
+	if(!$type['match']($this))
+	  continue;
+
+      $this->types_cache[$type_id] = $type;
+    }
+
+    return $this->types_cache;
   }
 
   function get_absolute_path() {
@@ -63,11 +88,18 @@ class ExplorerPath {
   function info() {
     $abs_path = $this->get_absolute_path();
 
-    return array(
+    $ret = array(
       'path' => implode("/", $this->path),
       'name' => $this->filename,
       'size' => filesize($abs_path),
     );
+
+    foreach($this->types() as $type) {
+      if(array_key_exists('info', $type))
+	$ret = array_merge($ret, $type['info']($this));
+    }
+
+    return $ret;
   }
 
   function render($view='view') {

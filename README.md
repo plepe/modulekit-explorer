@@ -29,6 +29,7 @@ Registers an additional file type. For a specified file, several types
 * options:
   * weight: several file types might match a specific file. In that case, information from types with smaller weight will be processed first.
   * mime_types: list of mime types
+  * not_mime_types: all mime types but not those in list
   * match: a function which decides whether the current file matches this file type. return true if yes.
   * view: a function which will return the file in HTML encoded, viewable (for images this is: `<img src='raw.php?path=path' />`.
   * info: a function which will return a list of formatted information about the path. See Function `info()` for details.
@@ -63,6 +64,10 @@ Class `ExplorerPath`
 Function `mime_type()`
 ----------------------
 Returns mime type of File, e.g. 'directory' or 'image/png'.
+
+Function `types()`
+------------------
+return ordered list of matching types. icons e.g. will be used from the top-most type if it is defined there.
 
 Function `get_absolute_path()`
 ------------------------------
