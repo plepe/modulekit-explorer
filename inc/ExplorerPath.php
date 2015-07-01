@@ -24,7 +24,7 @@ class ExplorerPath {
     return $this->parent->get_absolute_path() . "/" . $this->filename;
   }
 
-  function content() {
+  function children() {
     $ret = array();
     $abs_path = $this->get_absolute_path();
 
@@ -32,16 +32,33 @@ class ExplorerPath {
       $f = opendir($abs_path);
 
       while($r = readdir($f)) {
-	$ret[] = array(
-	  'name' => $r,
-	  'size' => filesize("{$abs_path}/{$r}"),
-	);
+	$ret[] = new ExplorerPath($r, $this);
       }
 
       closedir($f);
     }
 
     return $ret;
+  }
+
+  function content() {
+    $ret = array();
+
+    foreach($this->children() as $child) {
+      $ret[] = $child->info();
+    }
+
+    return $ret;
+  }
+
+  function info() {
+    $abs_path = $this->get_absolute_path();
+
+    return array(
+      'path' => implode("/", $this->path),
+      'name' => $this->filename,
+      'size' => filesize($abs_path),
+    );
   }
 
   function render($view='view') {

@@ -111,6 +111,11 @@ Example:
 ]
 ```
 
+Function `children()`
+---------------------
+Returns a list of ExplorerPath's which are children (resp. subdirectories) of
+the current path.
+
 Function `details()`
 --------------------
 Detailed formatted information about the current path (e.g. EXIF data).

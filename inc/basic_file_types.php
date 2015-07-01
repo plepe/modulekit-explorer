@@ -6,6 +6,7 @@ function explorer_register_basic_file_types($explorer) {
       $table = new table(array(
         'name' => array(
 	  'name' => 'Filename',
+	  'link' => '?path=[path]',
 	),
 	'size' => array(
 	  'name' => 'Size',
