@@ -149,4 +149,8 @@ class ExplorerPath {
     else
       return $this->children_cache[$filename]->get($m[2]);
   }
+
+  function raw() {
+    return file_get_contents($this->get_absolute_path());
+  }
 }
