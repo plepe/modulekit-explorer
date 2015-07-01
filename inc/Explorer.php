@@ -8,6 +8,8 @@ class Explorer {
     $this->actions = array();
 
     explorer_register_basic_file_types($this);
+
+    $this->finfo = finfo_open(FILEINFO_MIME_TYPE);
   }
 
   function get($path=null) {

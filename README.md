@@ -57,10 +57,12 @@ Class `ExplorerPath`
 ====================
 * filename: name of the current file
 * path: path inside the explored directory, including filename (array)
-* type: list of matching types
-* mime_type: mime type
 * parent: link to parent ExplorerPath (null for base directory)
 * explorer: link to Explorer
+
+Function `mime_type()`
+----------------------
+Returns mime type of File, e.g. 'directory' or 'image/png'.
 
 Function `get_absolute_path()`
 ------------------------------

@@ -19,6 +19,10 @@ class ExplorerPath {
     $this->children_cache = array();
   }
 
+  function mime_type() {
+    return finfo_file($this->explorer->finfo, $this->get_absolute_path());
+  }
+
   function get_absolute_path() {
     if($this->parent === null)
       return $this->base_path;
