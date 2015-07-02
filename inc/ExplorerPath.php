@@ -31,16 +31,16 @@ class ExplorerPath {
 
     $this->types_cache = array();
     foreach($this->explorer->registered_file_types() as $type_id=>$type) {
-      if(array_key_exists('mime_types', $type))
-	if(!in_array($this->mime_type(), $type['mime_types']))
+      if($type->mime_types)
+	if(!in_array($this->mime_type(), $type->mime_types))
 	  continue;
 
-      if(array_key_exists('not_mime_types', $type))
-	if(in_array($this->mime_type(), $type['not_mime_types']))
+      if($type->not_mime_types)
+	if(in_array($this->mime_type(), $type->not_mime_types))
 	  continue;
 
-      if(array_key_exists('match', $type))
-	if(!$type['match']($this))
+      if(method_exists($type, 'match'))
+	if(!$type->match($this))
 	  continue;
 
       $this->types_cache[$type_id] = $type;
@@ -57,16 +57,16 @@ class ExplorerPath {
 
     $this->actions_cache = array();
     foreach($this->explorer->registered_actions() as $action_id=>$action) {
-      if(array_key_exists('mime_types', $action))
-	if(!in_array($this->mime_type(), $action['mime_types']))
+      if($action->mime_types)
+	if(!in_array($this->mime_type(), $action->mime_types))
 	  continue;
 
-      if(array_key_exists('not_mime_types', $action))
-	if(in_array($this->mime_type(), $action['not_mime_types']))
+      if($action->not_mime_types)
+	if(in_array($this->mime_type(), $action->not_mime_types))
 	  continue;
 
-      if(array_key_exists('match', $action))
-	if(!$action['match']($this))
+      if(method_exists($action, 'match'))
+	if(!$action->match($this))
 	  continue;
 
       $this->actions_cache[$action_id] = $action;
@@ -76,7 +76,6 @@ class ExplorerPath {
 
     return $this->actions_cache;
   }
-
   function get_absolute_path() {
     if($this->parent === null)
       return $this->base_path;
@@ -127,8 +126,7 @@ class ExplorerPath {
     );
 
     foreach($this->types() as $type) {
-      if(array_key_exists('info', $type))
-	$ret = array_merge($ret, $type['info']($this));
+      $ret = array_merge($ret, $type->info($this));
     }
 
     return $ret;
@@ -136,8 +134,7 @@ class ExplorerPath {
 
   function render($view='view') {
     foreach($this->types() as $type) {
-      if(array_key_exists($view, $type))
-	return $type[$view]($this);
+      return $type->view($this);
     }
 
     return null;
@@ -146,12 +143,12 @@ class ExplorerPath {
   function show_actions() {
     $ret  = "<ul class='actions'>\n";
     foreach($this->actions() as $action_id=>$action) {
-      if(array_key_exists('link', $action))
-	$link = $action['link']($this);
+      if(method_exists($action, 'link'))
+	$link = $action->link($this);
       else
 	$link = "?path=" . htmlspecialchars(implode("/", $this->path)) . "&amp;action=" . htmlspecialchars($action_id);
 
-      $ret .= "<li><a href='{$link}'>{$action['title']}</a></li>";
+      $ret .= "<li><a href='{$link}'>{$action->title}</a></li>";
     }
     $ret .= "</ul>\n";
 

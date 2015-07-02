@@ -24,34 +24,21 @@ Function `get($path)`
 ---------------------
 Return an object of type ExplorerPath (if the path exists, otherwise null).
 
-Function `register_file_type($id, $options)`
---------------------------------------------
+Function `register_file_type($id, $class)`
+------------------------------------------
 Registers an additional file type. For a specified file, several types
 * id: id of the filetype, e.g. 'image'
-* options:
-  * weight: several file types might match a specific file. In that case, information from types with smaller weight will be processed first.
-  * mime_types: list of mime types
-  * not_mime_types: all mime types but not those in list
-  * match: a function which decides whether the current file matches this file type. return true if yes.
-  * view: a function which will return the file in HTML encoded, viewable (for images this is: `<img src='raw.php?path=path' />`.
-  * info: a function which will return a list of formatted information about the path. See Function `info()` for details.
-  * icon: file name of icon
-  * thumbnail: A thumbnail of the current file, see option 'view'
-  * access: a function whether the file is accessible by the current user
+* a class which extends the base class ExplorerFileType (see below)
 
 Function `registered_file_types()`
 ----------------------------------
 Return list of registered file types.
 
-Function `register_action($id, $options)`
------------------------------------------
+Function `register_action($id, $class)`
+---------------------------------------
 Registers actions for files, e.g. download, create zip archive, execute, ...
 * id: id of the action, e.g. 'download'
-* options:
-  * title: title of the action
-  * weight: order of actions to be presented (higher last)
-  * mime_types: list of mime types
-  * match: a function which decides whether the action is available on the specified file.
+* a class which extends the base class ExplorerAction (see below)
 
 Function `registered_actions()`
 ----------------------------------
@@ -169,3 +156,47 @@ Parameter:
 Function `raw()`
 ----------------
 Return file contents.
+
+Base Class `ExplorerFileType`
+=============================
+Properties:
+* weight: several file types might match a specific file. In that case, information from types with smaller weight will be processed first.
+* mime_types: list of mime types
+* not_mime_types: all mime types but not those in list
+* icon: file name of icon
+
+Function `match(ExplorerPath $file)`
+------------------------------------
+a function which decides whether the current file matches this file type. return true if yes.
+
+Function `view(ExplorerPath $file)`
+-----------------------------------
+a function which will return the file in HTML encoded, viewable (for images this is: `<img src='raw.php?path=path' />`.
+
+Function `info(ExplorerPath $file)`
+-----------------------------------
+A function which will return a list of formatted information about the path. See Function `ExplorerPath::info()` for details.
+
+Function `thumbnail(ExplorerPath $file)`
+----------------------------------------
+thumbnail: A thumbnail of the current file, see function 'view'
+
+Function `access(ExplorerPath $file)`
+-------------------------------------
+A function whether the file is accessible by the current user
+
+Base Class `ExplorerAction`
+=============================
+Properties:
+* title: title of the action
+* weight: order of actions to be presented (higher last)
+* mime_types: list of mime types
+* not_mime_types: all mime types but not those in list
+
+Function `match(ExplorerPath $file)`
+------------------------------------
+a function which decides whether the action is available for the specified file. Return true if yes.
+
+Function `link(ExplorerPath $file)`
+-----------------------------------
+The link to which the action will point. Default: ?path=[filename]&action=action_id

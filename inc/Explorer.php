@@ -23,8 +23,8 @@ class Explorer {
       return $this->root->get($path);
   }
 
-  function register_file_type($id, $options) {
-    $this->file_types[$id] = $options;
+  function register_file_type($id, $class) {
+    $this->file_types[$id] = new $class($id, $this);
   }
 
   function get_file_type($id) {
@@ -35,8 +35,8 @@ class Explorer {
     return $this->file_types;
   }
 
-  function register_action($id, $options) {
-    $this->actions[$id] = $options;
+  function register_action($id, $class) {
+    $this->actions[$id] = new $class($id, $this);
   }
 
   function get_action($id) {
