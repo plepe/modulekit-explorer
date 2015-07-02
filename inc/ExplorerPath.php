@@ -94,6 +94,9 @@ class ExplorerPath {
 	if(($r == ".") || ($r == ".."))
 	  continue;
 
+	if(!is_readable("{$abs_path}/{$r}"))
+	  continue;
+
 	if(!array_key_exists($r, $this->children_cache))
 	  $this->children_cache[$r] = new ExplorerPath($r, $this);
       }
