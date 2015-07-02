@@ -151,7 +151,7 @@ class ExplorerPath {
       else
 	$link = "?path=" . htmlspecialchars(implode("/", $this->path)) . "&amp;action=" . htmlspecialchars($action_id);
 
-      print "<li><a href='{$link}'>{$action['title']}</a></li>";
+      $ret .= "<li><a href='{$link}'>{$action['title']}</a></li>";
     }
     $ret .= "</ul>\n";
 
