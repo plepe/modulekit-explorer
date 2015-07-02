@@ -17,7 +17,7 @@ class Explorer {
     if(!isset($this->root))
       $this->root = new ExplorerPath(null, $this);
 
-    if($path === null)
+    if(($path === null) || ($path === ""))
       return $this->root;
     else
       return $this->root->get($path);
