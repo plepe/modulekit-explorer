@@ -46,4 +46,15 @@ class Explorer {
   function registered_actions() {
     return $this->actions;
   }
+
+  function show() {
+    $param = $_REQUEST;
+
+    $ex_path = $this->get(array_key_exists('path', $param) ? $param['path'] : null);
+
+    if($ex_path == null)
+      return "File not found!";
+
+    return $ex_path->show();
+  }
 }

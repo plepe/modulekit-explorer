@@ -3,12 +3,7 @@
 <?php call_hooks("init"); /* initialize submodules */ ?>
 <?php
 $explorer = new Explorer($base_path);
-
-$ex_path = $explorer->get(array_key_exists('path', $_REQUEST) ? $_REQUEST['path'] : null);
-if($ex_path == null)
-  $body = "File not found!";
-else
-  $body = $ex_path->show();
+$body = $explorer->show();
 
 Header("Content-Type: text/html; charset=utf-8");
 ?>

@@ -57,6 +57,10 @@ Function `registered_actions()`
 ----------------------------------
 Return list of registered actions.
 
+Function `show($view='view')`
+-----------------------------
+Load the path from GET parameters and show the given path by the specified view.
+
 Class `ExplorerPath`
 ====================
 * filename: name of the current file
