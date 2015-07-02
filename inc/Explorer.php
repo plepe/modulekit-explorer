@@ -10,7 +10,7 @@ class Explorer {
     explorer_register_basic_file_types($this);
     explorer_register_basic_actions($this);
 
-    $this->finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $this->finfo = finfo_open(FILEINFO_MIME);
   }
 
   function get($path=null) {

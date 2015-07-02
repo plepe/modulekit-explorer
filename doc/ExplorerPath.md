@@ -9,6 +9,10 @@ Function `mime_type()`
 ----------------------
 Returns mime type of File, e.g. 'directory' or 'image/png'.
 
+Function `mime_encoding()`
+--------------------------
+Returns mime encoding of File, e.g. 'binary', 'us-ascii', 'utf-8', 'iso-8859-1'. If the encoding is any other 8-bit character set, mime_encoding() will always be 'iso-8859-1'.
+
 Function `types()`
 ------------------
 return ordered list of matching types. icons e.g. will be used from the top-most type if it is defined there.
@@ -34,6 +38,8 @@ Example:
   'icon': 'default.png',
   'thumbnail': null,
   'actions': [ 'download' ]
+  'mime_type': 'text/plain',
+  'mime_encoding': 'us-ascii',
 }
 ```
 

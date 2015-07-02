@@ -19,10 +19,34 @@ class ExplorerPath {
     $this->children_cache = array();
     $this->types_cache = null;
     $this->actions_cache = null;
+    $this->mime_cache = null;
+  }
+
+  function mime() {
+    if($this->mime_cache === null) {
+      $mime = finfo_file($this->explorer->finfo, $this->get_absolute_path());
+
+      if(preg_match("/^(.*); charset=(.*)$/", $mime, $m)) {
+	$this->mime_cache = array($m[1], $m[2]);
+      }
+      else {
+	$this->mime_cache = array($mime, "binary");
+      }
+    }
+
+    return $this->mime_cache;
   }
 
   function mime_type() {
-    return finfo_file($this->explorer->finfo, $this->get_absolute_path());
+    $this->mime();
+
+    return $this->mime_cache[0];
+  }
+
+  function mime_encoding() {
+    $this->mime();
+
+    return $this->mime_cache[1];
   }
 
   function types() {
@@ -123,6 +147,8 @@ class ExplorerPath {
       'path' => implode("/", $this->path),
       'name' => $this->filename,
       'size' => filesize($abs_path),
+      'mime_type' => $this->mime_type(),
+      'mime_encoding' => $this->mime_encoding(),
     );
 
     foreach($this->types() as $type) {
