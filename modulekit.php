@@ -11,4 +11,7 @@ $include = array(
     'inc/ExplorerAction.php',
     'inc/*.php',
   ),
+  'js' => array(
+    'inc/*.js',
+  ),
 );

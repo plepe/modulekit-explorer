@@ -74,7 +74,7 @@ class ExplorerAction_diff extends ExplorerAction {
 
     $diff_index = $this->get_diff_index($file, $compare_file);
 
-    $result  = "<div class='ExplorerAction_diff' style='position: relative; width: 100%;'>\n";
+    $result  = "<div id='ExplorerAction_diff' style='position: relative; width: 100%;'>\n";
 
     $result = "<div id='original' style='vertical-align: top; float: left; width: 50%; display: inline-block; overflow: auto;'>" . $this->rowify($result_content, $diff_index[0]) . "</div>\n" .
               "<div id='compare' style='vertical-align: top; width: 50%; display: inline-block; overflow: auto;'>" . $this->rowify($compare_content, $diff_index[1]) . "</div>\n";
