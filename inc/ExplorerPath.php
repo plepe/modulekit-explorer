@@ -160,10 +160,18 @@ class ExplorerPath {
 
   function render($view='view') {
     foreach($this->types() as $type) {
-      return $type->view($this);
+      $ret = $type->view($this);
     }
 
-    return null;
+    if($ret === null)
+      return null;
+
+    foreach($this->actions() as $action_id=>$action) {
+      if(method_exists($action, 'render'))
+	$action->render($this, $ret, $view);
+    }
+
+    return $ret;
   }
 
   function show_actions() {
