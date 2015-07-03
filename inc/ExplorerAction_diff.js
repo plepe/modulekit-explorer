@@ -1,6 +1,3 @@
-window.onload = ExplorerAction_diff;
-window.onresize = ExplorerAction_diff;
-
 function ExplorerAction_diff() {
   var parent_div = document.getElementById('ExplorerAction_diff');
 
@@ -23,3 +20,6 @@ function ExplorerAction_diff() {
     compare = compare.nextSibling;
   }
 }
+
+register_hook("init", ExplorerAction_diff);
+register_hook("resize", ExplorerAction_diff);
