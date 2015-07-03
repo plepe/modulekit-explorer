@@ -10,7 +10,8 @@ class ExplorerFileType_plaintext extends ExplorerFileType {
     if($file->mime_encoding() == "iso-8859-1")
       $content = utf8_encode($content);
 
-    $ret .= $content;
+    $ret .= htmlspecialchars($content);
+
     $ret .= "</pre>\n";
 
     return $ret;
