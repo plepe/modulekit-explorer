@@ -166,8 +166,11 @@ class ExplorerPath {
     if($ret === null)
       return null;
 
-    foreach($this->actions() as $action_id=>$action) {
-      if(method_exists($action, 'render'))
+    if($action_id = $_REQUEST['action']) {
+      $action = $this->actions();
+      $action = $action[$action_id];
+
+      if($action && method_exists($action, 'render'))
 	$action->render($this, $ret, $view);
     }
 
