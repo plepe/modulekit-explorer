@@ -19,7 +19,7 @@ Header("Content-Type: text/html; charset=utf-8");
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
   </head>
   <body>
-<? print $body; ?>
+<?php print $body; ?>
   </body>
 </html>
 
